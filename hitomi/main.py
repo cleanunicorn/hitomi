@@ -28,17 +28,17 @@ def main():
     start_repl(node=args.node, local_vars=locals())
 
 
-def init_web3(node: str, timeout:int = 10) -> Web3:
+def init_web3(node: str, timeout: int = 10) -> Web3:
     w3 = None
 
     if os.path.exists(node):
         w3 = Web3(Web3.IPCProvider(ipc_path=node, timeout=timeout))
     elif node.startswith("https://"):
-        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={'timeout': 60}))
+        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={"timeout": 60}))
     elif node.startswith("http://"):
-        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={'timeout': 60}))
+        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={"timeout": 60}))
     elif node.startswith("ws://"):
-        w3 = Web3(Web3.WebsocketProvider(node, websocket_kwargs={'timeout': 60}))
+        w3 = Web3(Web3.WebsocketProvider(node, websocket_kwargs={"timeout": 60}))
 
     return w3
 
