@@ -1,15 +1,23 @@
-# Mason
+# Hitomi
 
 Ethereum console for any node.
 
 ## Install
 
-
+```console
+$ pip install hitomi
+```
 
 ## Quick start
 
-```console
-$ pip install mason
-```
+
 
 ## Demo
+
+
+## Why Hitomi?
+
+
+
+```
+```
