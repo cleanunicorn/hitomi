@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Hitomi ganache",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/hitomi.py",
+            "console": "integratedTerminal",
+            "args": [
+                "http://localhost:7545",
+            ],
+        },
+        {
+            "name": "Hitomi ws",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/hitomi.py",
+            "console": "integratedTerminal",
+            "args": [
+                "ws://localhost:8545",
+            ],
+        },
+        {
+            "name": "Hitomi IPC",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/hitomi.py",
+            "console": "integratedTerminal",
+            "args": [
+                "/home/daniel/Development/github.com/consensys/paper-frontrun/blockchain-local/geth.ipc",
+            ],
+        }
+    ]
+}
