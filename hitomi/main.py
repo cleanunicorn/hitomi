@@ -64,9 +64,7 @@ def start_repl(node: str, local_vars: dict, info_banner: str = ""):
 
 Connected to {node}.
 {info_banner}""".format(
-            version=__version__,
-            node=node,
-            info_banner=info_banner,
+            version=__version__, node=node, info_banner=info_banner,
         )
     )
 
@@ -85,15 +83,16 @@ def init_web3(node: str, timeout: int = 10) -> Web3:
 
     return w3
 
+
 def get_info_banner(web3: Web3) -> str:
     return """Chain ID: {chainId}
 Block number: {blockNumber}
 Mining: {mining} ({hashrate} hash rate)
 Syncing: {syncing}
-""" .format(
+""".format(
         chainId=web3.eth.chainId,
         blockNumber=web3.eth.blockNumber,
         mining=web3.eth.hashrate > 0,
         hashrate=web3.eth.hashrate,
-        syncing=web3.eth.syncing
+        syncing=web3.eth.syncing,
     )
