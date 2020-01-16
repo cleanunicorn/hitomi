@@ -1,9 +1,8 @@
 import os, atexit, readline, rlcompleter, code
 import argparse
 
-from web3 import Web3
-
 from hitomi.version import __version__
+from hitomi.network.web3 import Web3
 
 
 def main():
@@ -21,6 +20,11 @@ def main():
         default="http://localhost:8545",
     )
 
+    # Timeout for requests
+    parser.add_argument(
+        "-t", "--timeout", help="timeout for requests", type=float, default=10,
+    )
+
     # Display info about the connected node
     parser.add_argument(
         "--noinfo",
@@ -32,7 +36,8 @@ def main():
     args = parser.parse_args()
 
     # Init web3 object
-    web3 = init_web3(node=args.node)
+    web3 = Web3()
+    web3.connect(node=args.node, timeout=args.timeout)
 
     # Get info banner about the node
     info_banner = ""
@@ -70,29 +75,36 @@ Connected to {node}.
 
 
 def init_web3(node: str, timeout: int = 10) -> Web3:
-    w3 = None
-
-    if os.path.exists(node):
-        w3 = Web3(Web3.IPCProvider(ipc_path=node, timeout=timeout))
-    elif node.startswith("https://"):
-        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={"timeout": 60}))
-    elif node.startswith("http://"):
-        w3 = Web3(Web3.HTTPProvider(node, request_kwargs={"timeout": 60}))
-    elif node.startswith("ws://"):
-        w3 = Web3(Web3.WebsocketProvider(node, websocket_kwargs={"timeout": 60}))
+    w3 = Web3()
+    w3.connect(node=node, timeout=timeout)
 
     return w3
 
 
 def get_info_banner(web3: Web3) -> str:
+    chainId = None
+    blockNumber = None
+    mining = None
+    hashrate = None
+    syncing = None
+
+    try:
+        chainId = web3.eth.chainId
+    except Exception:
+        pass
+
+    blockNumber = web3.eth.blockNumber
+    hashrate = web3.eth.hashrate
+    syncing = web3.eth.syncing
+
     return """Chain ID: {chainId}
 Block number: {blockNumber}
 Mining: {mining} ({hashrate} hash rate)
 Syncing: {syncing}
 """.format(
-        chainId=web3.eth.chainId,
-        blockNumber=web3.eth.blockNumber,
-        mining=web3.eth.hashrate > 0,
-        hashrate=web3.eth.hashrate,
-        syncing=web3.eth.syncing,
+        chainId=chainId,
+        blockNumber=blockNumber,
+        mining=hashrate > 0,
+        hashrate=hashrate,
+        syncing=syncing,
     )

@@ -33,6 +33,15 @@
             "args": [
                 "/home/daniel/Development/github.com/consensys/paper-frontrun/blockchain-local/geth.ipc",
             ],
+        },
+        {
+            "name": "Hitomi Infura",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/hitomi.py",
+            "console": "integratedTerminal",
+            "args": [
+                "https://mainnet.infura.io"            ],
         }
     ]
 }
