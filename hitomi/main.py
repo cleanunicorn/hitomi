@@ -1,8 +1,8 @@
-import os, atexit, readline, rlcompleter, code
 import argparse
 
 from hitomi.version import __version__
 from hitomi.network.web3 import Web3
+from hitomi.console.__main__ import Console
 
 
 def main():
@@ -42,49 +42,17 @@ def main():
     # Get info banner about the node
     info_banner = ""
     if args.noinfo is False:
-        info_banner = get_info_banner(web3)
+        info_banner = get_info_banner(web3=web3, node_uri=args.node, version=__version__)
 
-    start_repl(node=args.node, info_banner=info_banner, local_vars=locals())
+    # Start REPL console
+    repl_shell = Console(vars=dict({
+        "web3": web3
+    }))
+    repl_shell.interact(banner=info_banner)
 
-
-def start_repl(node: str, local_vars: dict, info_banner: str = ""):
-    # Load history
-    history_path = os.path.join(os.environ["HOME"], ".hitomi_history")
-    if os.path.isfile(history_path):
-        readline.read_history_file(history_path)
-
-    # Trigger history save on exit
-    atexit.register(readline.write_history_file, history_path)
-
-    # Load variables
-    vars = globals()
-    vars.update(locals())
-    vars.update(local_vars)
-
-    # Start REPL
-    readline.set_completer(rlcompleter.Completer(vars).complete)
-    readline.parse_and_bind("tab: complete")
-    code.InteractiveConsole(vars).interact(
-        banner="""Hitomi {version}.
-
-Connected to {node}.
-{info_banner}""".format(
-            version=__version__, node=node, info_banner=info_banner,
-        )
-    )
-
-
-def init_web3(node: str, timeout: int = 10) -> Web3:
-    w3 = Web3()
-    w3.connect(node=node, timeout=timeout)
-
-    return w3
-
-
-def get_info_banner(web3: Web3) -> str:
+def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
     chainId = None
     blockNumber = None
-    mining = None
     hashrate = None
     syncing = None
 
@@ -97,11 +65,17 @@ def get_info_banner(web3: Web3) -> str:
     hashrate = web3.eth.hashrate
     syncing = web3.eth.syncing
 
-    return """Chain ID: {chainId}
+    return"""Starting Hitomi {version}.
+
+Connected to {node_uri}.
+
+Chain ID: {chainId}
 Block number: {blockNumber}
 Mining: {mining} ({hashrate} hash rate)
 Syncing: {syncing}
-""".format(
+""" .format(
+        version=version,
+        node_uri=node_uri,
         chainId=chainId,
         blockNumber=blockNumber,
         mining=hashrate > 0,

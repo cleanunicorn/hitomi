@@ -31,6 +31,18 @@ Syncing: False
 >>> 
 ```
 
+## Commands
+
+Once you are dropped in the console there are some commands available
+
+- [accounts](#commandaccounts)
+
+### <a href="#commandaccounts"></a>Accounts
+```python
+>>> accounts
+blalblabla
+```
+
 <!--
 ## Demo
 
