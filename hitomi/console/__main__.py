@@ -23,16 +23,37 @@ class Console(code.InteractiveConsole):
     def push(self, line):
         return super().push(line)
 
-    def _console_write(self, obj):
-        text = repr(obj)
+    def runsource(self, source, filename="<input>", symbol="single"):
         try:
-            if obj and isinstance(obj, dict):
-                text = color.pretty_dict(obj)
-            elif obj and isinstance(obj, (tuple, list, set)):
-                text = color.pretty_sequence(obj)
-        except (SyntaxError, NameError):
+            code = self.compile(source, filename, "single")
+        except (OverflowError, SyntaxError, ValueError):
+            self.showsyntaxerror(filename)
+            return False
+
+        # Multiline code
+        if code is None:
+            return True
+
+        try:
+            self.compile(source, filename, "eval")
+            code = self.compile(f"__ret_value__ = {source}", filename, "exec")
+        except Exception:
             pass
-        print(text)
+
+        self.runcode(code)
+
+        if "__ret_value__" in self.locals and self.locals["__ret_value__"] is not None:
+            self._console_write(self.locals["__ret_value__"])
+            del self.locals["__ret_value__"]
+
+        return False
+
+    # TODO: Pretty print objects
+    def _console_write(self, obj):
+        """
+        Pretty print console output
+        """
+        print(repr(obj))
 
 
     
