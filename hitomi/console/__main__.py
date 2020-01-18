@@ -3,9 +3,15 @@ import atexit
 import os
 import readline
 import rlcompleter
+import pprint
+
+from web3.datastructures import AttributeDict
+from hitomi.commands.accounts import Accounts
+from hitomi.network.web3 import Web3
+
 
 class Console(code.InteractiveConsole):
-    def __init__(self, vars: dict):
+    def __init__(self, vars: dict, web3: Web3):
         # Set history file
         history_path = os.path.join(os.environ["HOME"], ".hitomi_history")
         if os.path.isfile(history_path):
@@ -17,6 +23,10 @@ class Console(code.InteractiveConsole):
         # Setup autocomplete
         readline.set_completer(rlcompleter.Completer(vars).complete)
         readline.parse_and_bind("tab: complete")
+
+        # Load commands
+        local_commands = dict({"accounts": Accounts(web3)})
+        vars.update(local_commands)
 
         super().__init__(vars)
 
@@ -48,12 +58,15 @@ class Console(code.InteractiveConsole):
 
         return False
 
-    # TODO: Pretty print objects
     def _console_write(self, obj):
         """
         Pretty print console output
         """
-        print(repr(obj))
+        text = pprint.pformat(obj, indent=4)
+        try:
+            if obj and isinstance(obj, AttributeDict):
+                text = pprint.pformat(dict(obj), indent=4)
+        except:
+            pass
 
-
-    
+        print(text)

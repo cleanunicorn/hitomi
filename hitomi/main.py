@@ -42,13 +42,14 @@ def main():
     # Get info banner about the node
     info_banner = ""
     if args.noinfo is False:
-        info_banner = get_info_banner(web3=web3, node_uri=args.node, version=__version__)
+        info_banner = get_info_banner(
+            web3=web3, node_uri=args.node, version=__version__
+        )
 
     # Start REPL console
-    repl_shell = Console(vars=dict({
-        "web3": web3
-    }))
+    repl_shell = Console(vars=dict({"web3": web3}), web3=web3)
     repl_shell.interact(banner=info_banner)
+
 
 def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
     chainId = None
@@ -65,7 +66,7 @@ def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
     hashrate = web3.eth.hashrate
     syncing = web3.eth.syncing
 
-    return"""Starting Hitomi {version}.
+    return """Starting Hitomi {version}.
 
 Connected to {node_uri}.
 
@@ -73,7 +74,7 @@ Chain ID: {chainId}
 Block number: {blockNumber}
 Mining: {mining} ({hashrate} hash rate)
 Syncing: {syncing}
-""" .format(
+""".format(
         version=version,
         node_uri=node_uri,
         chainId=chainId,
