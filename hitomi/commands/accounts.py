@@ -9,9 +9,7 @@ class Accounts(list):
         self.refresh()
 
     def refresh(self):
-        self._cache = dict({
-            "accounts": self.web3.eth.accounts
-        })
+        self._cache = dict({"accounts": self.web3.eth.accounts})
 
     def _accounts(self) -> list:
         return self._cache["accounts"]
