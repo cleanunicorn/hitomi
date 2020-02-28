@@ -22,7 +22,7 @@ class Web3(_web3):
 
         if node.startswith("https://") or node.startswith("http://"):
             self.provider = HTTPProvider(node, request_kwargs={"timeout": timeout})
-        elif node.startswith("ws://"):
+        elif node.startswith("ws://") or node.startswith("wss://"):
             self.provider = WebsocketProvider(
                 node, websocket_kwargs={"timeout": timeout}
             )
