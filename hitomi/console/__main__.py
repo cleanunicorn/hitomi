@@ -7,6 +7,7 @@ import pprint
 
 from web3.datastructures import AttributeDict
 from hitomi.commands.accounts import Accounts
+from hitomi.commands.transaction import Transaction
 from hitomi.network.web3 import Web3
 
 
@@ -25,7 +26,8 @@ class Console(code.InteractiveConsole):
         readline.parse_and_bind("tab: complete")
 
         # Load commands
-        local_commands = dict({"accounts": Accounts(web3)})
+        local_commands = dict({"accounts": Accounts(web3), "transaction": Transaction,})
+
         vars.update(local_commands)
 
         super().__init__(vars)
