@@ -89,5 +89,5 @@ Once you are dropped in the console there are some commands available
 
 ## Why Hitomi?
 
-Why not?
+[Hitomi Tanaka](https://es.wikipedia.org/wiki/Hitomi_Tanaka)
 <!-- Add ascii art picture of Hitomi -->
