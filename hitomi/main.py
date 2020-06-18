@@ -9,6 +9,7 @@ def main():
     # Parse arguments
     parser = argparse.ArgumentParser(
         description="Connect to an Ethereum node.",
+        epilog="Version {version}".format(version=__version__),
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 

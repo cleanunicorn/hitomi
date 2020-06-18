@@ -65,8 +65,28 @@ class Console(code.InteractiveConsole):
         text = pprint.pformat(obj, indent=4)
         try:
             if obj and isinstance(obj, AttributeDict):
-                text = pprint.pformat(dict(obj), indent=4)
-        except:
-            pass
+                objCopy = dict(obj)
+
+                if objCopy.get("logs"):
+                    logs = []
+                    for log in objCopy.get("logs"):
+                        logs.append(dict(log))
+                    objCopy["logs"] = logs
+
+                text = pprint.pformat((objCopy), indent=4)
+        except Exception as e:
+            print(e)
 
         print(text)
+
+    def _recursive_pretty_print(self, obj):
+        try:
+
+            for attr, value in obj.__dict__.items():
+                obj = this._recursive_pretty_print()
+            pass
+        except:
+
+            pass
+
+        return obj
