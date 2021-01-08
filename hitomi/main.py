@@ -53,19 +53,18 @@ def main():
 
 
 def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
-    chainId = None
-    blockNumber = None
-    hashrate = None
-    syncing = None
+    chainId = 0
+    blockNumber = 0
+    hashrate = 0
+    syncing = False
 
     try:
         chainId = web3.eth.chainId
+        blockNumber = web3.eth.blockNumber
+        hashrate = web3.eth.hashrate
+        syncing = web3.eth.syncing
     except Exception:
         pass
-
-    blockNumber = web3.eth.blockNumber
-    hashrate = web3.eth.hashrate
-    syncing = web3.eth.syncing
 
     return """Starting Hitomi {version}.
 
