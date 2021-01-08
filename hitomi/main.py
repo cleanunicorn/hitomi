@@ -23,7 +23,11 @@ def main():
 
     # Timeout for requests
     parser.add_argument(
-        "-t", "--timeout", help="timeout for requests", type=float, default=10,
+        "-t",
+        "--timeout",
+        help="timeout for requests",
+        type=float,
+        default=10,
     )
 
     # Display info about the connected node
