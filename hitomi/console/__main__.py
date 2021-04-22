@@ -7,6 +7,9 @@ import pprint
 
 from web3.datastructures import AttributeDict
 from hitomi.commands.accounts import Accounts
+from hitomi.commands.checksum import Checksum
+from hitomi.commands.contract import ContractInit
+from hitomi.commands.abi import Abi
 from hitomi.network.web3 import Web3
 
 
@@ -25,7 +28,12 @@ class Console(code.InteractiveConsole):
         readline.parse_and_bind("tab: complete")
 
         # Load commands
-        local_commands = dict({"accounts": Accounts(web3)})
+        local_commands = dict({
+            "accounts": Accounts(web3),
+            "checksum": Checksum(web3),
+            "contract": ContractInit(web3),
+            "abi": Abi(),
+        })
         vars.update(local_commands)
 
         super().__init__(vars)
@@ -83,7 +91,7 @@ class Console(code.InteractiveConsole):
         try:
 
             for attr, value in obj.__dict__.items():
-                obj = this._recursive_pretty_print()
+                obj = self._recursive_pretty_print()
             pass
         except:
 
