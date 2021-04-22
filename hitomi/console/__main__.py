@@ -40,9 +40,11 @@ class Console(code.InteractiveConsole):
             }
         )
 
-        # Add eval command
-        local_commands["run"] = lambda filename: eval(
-            open(filename).read(), globals(), local_commands
+        # Add run command with local environment
+        extended_locals = local_commands
+        extended_locals.update(locals())
+        local_commands["run"] = lambda filename: exec(
+            open(filename).read(), extended_locals
         )
 
         # Add vars to local REPL instance
