@@ -6,11 +6,14 @@ import rlcompleter
 import pprint
 
 from web3.datastructures import AttributeDict
+from hitomi.network.web3 import Web3
+
+# Load commands
 from hitomi.commands.accounts import Accounts
 from hitomi.commands.checksum import Checksum
 from hitomi.commands.contract import ContractInit
 from hitomi.commands.abi import Abi
-from hitomi.network.web3 import Web3
+from hitomi.commands.run import Run
 
 
 class Console(code.InteractiveConsole):
@@ -36,6 +39,13 @@ class Console(code.InteractiveConsole):
                 "abi": Abi(),
             }
         )
+
+        # Add eval command
+        local_commands["run"] = lambda filename: eval(
+            open(filename).read(), globals(), local_commands
+        )
+
+        # Add vars to local REPL instance
         vars.update(local_commands)
 
         super().__init__(vars)
