@@ -1,5 +1,6 @@
 from web3.contract import Contract
 
+
 class ContractInit:
     def __init__(self, web3) -> None:
         self.web3 = web3
@@ -10,5 +11,3 @@ class ContractInit:
             *args,
             **kwargs,
         )
-
-    

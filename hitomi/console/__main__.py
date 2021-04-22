@@ -28,12 +28,14 @@ class Console(code.InteractiveConsole):
         readline.parse_and_bind("tab: complete")
 
         # Load commands
-        local_commands = dict({
-            "accounts": Accounts(web3),
-            "checksum": Checksum(web3),
-            "contract": ContractInit(web3),
-            "abi": Abi(),
-        })
+        local_commands = dict(
+            {
+                "accounts": Accounts(web3),
+                "checksum": Checksum(web3),
+                "contract": ContractInit(web3),
+                "abi": Abi(),
+            }
+        )
         vars.update(local_commands)
 
         super().__init__(vars)
