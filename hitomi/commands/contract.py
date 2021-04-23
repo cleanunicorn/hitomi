@@ -11,3 +11,13 @@ class ContractInit:
             *args,
             **kwargs,
         )
+
+    def calculateAddress(self, address: str, nonce: int = None) -> str:
+        address = self.web3.toChecksumAddress(address)
+
+        if nonce is None:
+            nonce = self.web3.eth.getTransactionCount(address)
+
+        return self.web3.keccak(rlp.encode([bytes.fromhex(address[2:]), nonce]))[
+            12:
+        ].hex()
