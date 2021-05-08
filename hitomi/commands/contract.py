@@ -13,6 +13,10 @@ class ContractInit:
         )
 
     def calculateAddress(self, address: str, nonce: int = None) -> str:
+        """
+        Calculates the next address a contract will have based on the
+        account deploying it and its nonce
+        """
         address = self.web3.toChecksumAddress(address)
 
         if nonce is None:

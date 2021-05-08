@@ -9,7 +9,9 @@ from web3.datastructures import AttributeDict
 from hitomi.commands.accounts import Accounts
 from hitomi.commands.checksum import Checksum
 from hitomi.commands.contract import ContractInit
+from hitomi.commands.erc20 import ERC20
 from hitomi.commands.abi import Abi
+from hitomi.commands.uniswap import UniswapPair
 from hitomi.network.web3 import Web3
 
 
@@ -33,6 +35,8 @@ class Console(code.InteractiveConsole):
                 "accounts": Accounts(web3),
                 "checksum": Checksum(web3),
                 "contract": ContractInit(web3),
+                "erc20": ERC20(web3),
+                "uniswap_pair": UniswapPair(web3),
                 "abi": Abi(),
             }
         )
