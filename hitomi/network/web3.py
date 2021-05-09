@@ -61,6 +61,10 @@ class Web3(_web3):
 
         try:
             self.handleEnode()
+        except Exception:
+            pass
+
+        try:
             self.handleProofOfAuthorityChain()
         except Exception:
             pass
