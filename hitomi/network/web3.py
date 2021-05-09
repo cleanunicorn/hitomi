@@ -17,27 +17,27 @@ class Web3(_web3):
 
     def handleEnode(self) -> None:
         """
-            Obtain enode path
+        Obtain enode path
         """
         connected = self.isConnected()
 
         if connected:
-            if self.clientVersion.startswith('Parity'):
+            if self.clientVersion.startswith("Parity"):
                 self.enode = self.parity.enode
-            elif self.clientVersion.startswith('Geth'):
-                self.enode = self.geth.admin.nodeInfo()['enode']
-            elif self.clientVersion.startswith('bor'):
-                self.enode = self.geth.admin.nodeInfo()['enode']
+            elif self.clientVersion.startswith("Geth"):
+                self.enode = self.geth.admin.nodeInfo()["enode"]
+            elif self.clientVersion.startswith("bor"):
+                self.enode = self.geth.admin.nodeInfo()["enode"]
 
     def handleProofOfAuthorityChain(self) -> None:
         """
-            Add PoA middleware because
-            https://web3py.readthedocs.io/en/stable/middleware.html#why-is-geth-poa-middleware-necessary
+        Add PoA middleware because
+        https://web3py.readthedocs.io/en/stable/middleware.html#why-is-geth-poa-middleware-necessary
         """
         connected = self.isConnected()
 
         if connected:
-            if self.clientVersion.startswith('bor'):
+            if self.clientVersion.startswith("bor"):
                 self.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     def connect(self, node: str, timeout: int = 10) -> None:
