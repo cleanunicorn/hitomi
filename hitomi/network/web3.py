@@ -23,7 +23,7 @@ class Web3(_web3):
 
         if connected:
             if self.clientVersion.startswith("Parity"):
-                self.enode = self.parity.enode
+                self.enode = self.parity.enode()
             elif self.clientVersion.startswith("Geth"):
                 self.enode = self.geth.admin.nodeInfo()["enode"]
             elif self.clientVersion.startswith("bor"):
