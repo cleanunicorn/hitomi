@@ -57,12 +57,16 @@ def main():
 
 
 def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
-    chainId = 0
-    blockNumber = 0
-    hashrate = 0
-    syncing = False
+    nodeVersion: str = ""
+    protocolVersion: int = 0
+    chainId: int = 0
+    blockNumber: int = 0
+    hashrate: int = 0
+    syncing: bool = False
 
     try:
+        nodeVersion = web3.clientVersion
+        protocolVersion = web3.eth.protocolVersion
         chainId = web3.eth.chainId
         blockNumber = web3.eth.blockNumber
         hashrate = web3.eth.hashrate
@@ -74,6 +78,9 @@ def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
 
 Connected to {node_uri}.
 
+Node version: {nodeVersion}
+Enode path: {enode}
+Protocol version: {protocolVersion}
 Chain ID: {chainId}
 Block number: {blockNumber}
 Mining: {mining} ({hashrate} hash rate)
@@ -81,6 +88,9 @@ Syncing: {syncing}
 """.format(
         version=version,
         node_uri=node_uri,
+        nodeVersion=nodeVersion,
+        enode=web3.enode,
+        protocolVersion=protocolVersion,
         chainId=chainId,
         blockNumber=blockNumber,
         mining=hashrate > 0,
