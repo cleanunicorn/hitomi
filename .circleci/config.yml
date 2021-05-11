@@ -61,7 +61,7 @@ jobs:
           command: python3 setup.py verify
       - run:
           name: Build
-          command: python3 setup.py sdist
+          command: python3 -m build
       - run:
           name: Deploy
           command: |
