@@ -61,7 +61,9 @@ jobs:
           command: python3 setup.py verify
       - run:
           name: Build
-          command: python3 -m build
+          command: |
+            python3 -m pip install --upgrade build
+            python3 -m build
       - run:
           name: Deploy
           command: |
