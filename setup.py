@@ -44,6 +44,10 @@ setup(
             [console_scripts]
             hitomi=hitomi.main:main
         """,
+    include_package_data=True,
+    package_data={
+        "": ["*.json"],
+    },
     cmdclass={"verify": VerifyVersionCommand},
     url="https://github.com/cleanunicorn/hitomi",
 )
