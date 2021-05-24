@@ -66,10 +66,30 @@ def get_info_banner(web3: Web3, version: str, node_uri: str) -> str:
 
     try:
         nodeVersion = web3.clientVersion
+    except Exception:
+        pass
+
+    try:
         protocolVersion = web3.eth.protocolVersion
+    except Exception:
+        pass
+
+    try:
         chainId = web3.eth.chainId
+    except Exception:
+        pass
+
+    try:
         blockNumber = web3.eth.blockNumber
+    except Exception:
+        pass
+
+    try:
         hashrate = web3.eth.hashrate
+    except Exception:
+        pass
+
+    try:
         syncing = web3.eth.syncing
     except Exception:
         pass
