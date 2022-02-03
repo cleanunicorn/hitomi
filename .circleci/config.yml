@@ -3,7 +3,7 @@
 
 defaults: &defaults
   docker:
-    - image: circleci/python:3.8.1
+    - image: circleci/python:3.8.10
   working_directory: ~/app
 
 version: 2
