@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip install --user -r requirements.txt
+            make
 
       - run:
           name: Black style check
